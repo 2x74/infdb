@@ -1,0 +1,17 @@
+Options -Indexes
+
+RewriteEngine On
+
+# Redirect alias domains to main domain
+RewriteCond %{HTTP_HOST} ^(www\.|)(infinidb|idb)\.lunae\.pw$ [NC]
+RewriteRule ^ https://infdb.lunae.pw%{REQUEST_URI} [R=301,L]
+
+# Route /api/submit -> api/submit/index.php
+RewriteRule ^api/submit/?$ api/submit/index.php [L]
+RewriteRule ^api/wr/?$     api/wr/index.php     [L]
+RewriteRule ^api/player/?$ api/player/index.php [L]
+
+# Everything else -> index.php (for ?p= routing)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
